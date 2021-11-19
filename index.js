@@ -51,7 +51,7 @@ function manipulateTodo(e){
         const todo=selectItem.parentElement;
         todo.classList.add("fall");
         todo.addEventListener("transitionend",function(){
-                todo.remove();
+                // todo.remove();
     });
     }
     if(selectItem.classList[0]==="check-Btn"){
