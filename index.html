@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo list | vanilla JS</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="header">
+            <h1>Todo List App</h1>
+        </div>
+        <form>
+            <input type="text" class="list-input">
+            <Button class="addBtn" class="submit"><i class="fas fa-plus-circle"></i></Button>
+            <Button style="display:none" class="saveBtn" class="submit"><i class="fas fa-pen"></i></Button>
+        </form>
+    </header>
+    <div class="todo-container">
+        <ul class="todoList"></ul>
+    </div>
+    <script src="index.js" defer></script>
+</body>
+</html>
