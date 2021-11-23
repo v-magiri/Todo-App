@@ -2,10 +2,16 @@
 const todoInput=document.querySelector(".list-input");
 const addBtn=document.querySelector(".addBtn");
 const todolist=document.querySelector(".todoList");
+const saveBtn=document.querySelector(".saveBtn");
+const label=document.getElementById("#inputStatus");
+const choice=document.querySelector(".filter");
 //DOM manipulation
 addBtn.addEventListener("click",addList);
 
-todolist.addEventListener("click",manipulateTodo)
+todolist.addEventListener("click",manipulateTodo);
+choice.addEventListener("click",sortTodo);
+
+saveBtn.addEventListener("click",editTodo);
 
 function addList(event){
     event.preventDefault();
@@ -14,7 +20,7 @@ function addList(event){
     const listItem=document.createElement("li");
     listItem.classList.add("list_Item");
     // if(listItem.textContent.length !== 0){
-    console.log(listItem);
+    // console.log(listItem);
     listItem.innerText=todoInput.value;
     todoContainer.appendChild(listItem);
 
@@ -51,7 +57,7 @@ function manipulateTodo(e){
         const todo=selectItem.parentElement;
         todo.classList.add("fall");
         todo.addEventListener("transitionend",function(){
-                // todo.remove();
+                todo.remove();
     });
     }
     if(selectItem.classList[0]==="check-Btn"){
@@ -62,9 +68,55 @@ function manipulateTodo(e){
         const todo=selectItem.parentElement;
         const itemSelected=todo.querySelector(".list_Item").textContent;
         todoInput.value=itemSelected;
-        addBtn.innerHTML='<i class="fas fa-pen"></i>'
-
+        // editTodo();
+        addBtn.style.display="none";
+        saveBtn.style.display="inline";
+        saveBtn.addEventListener("click",function(){
+            selectItem.innerHTML=todoInput.value;
+            addBtn.style.display="inline";
+            saveBtn.style.display="none";
+            e.preventDefault();
+        });
         console.log();
     }
     
+}
+function editTodo(e){
+    e.preventDefault();
+    const selectItem=e.target;
+    const todo=selectItem.parentElement;
+    addBtn.style.display="none";
+    saveBtn.style.display="inline";
+    todo.selectItem.innerHTML=todoInput.value;
+    addBtn.style.display="inline";
+    saveBtn.style.display="none";
+
+}
+function sortTodo(e){
+    const items=todolist.childNodes;
+    // console.log(e.target.value);
+    items.forEach(function(todo){
+        switch(e.target.value){
+            case "all":
+                todo.style.display="flex";
+                break;
+            case "completed":
+                if(todo.classList.contains('completed')){
+                    todo.style.display="flex";
+                }
+                else{
+                    todo.style.display="none";
+                }
+                break;
+            case "incomplete":
+                if(!todo.classList.contains('completed')){
+                    todo.style.display="flex";
+                }
+                else{
+                    todo.style.display="none";
+                }
+                break;
+            
+        }
+    });
 }

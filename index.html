@@ -18,8 +18,18 @@
             <input type="text" class="list-input">
             <Button class="addBtn" class="submit"><i class="fas fa-plus-circle"></i></Button>
             <Button style="display:none" class="saveBtn" class="submit"><i class="fas fa-pen"></i></Button>
+           <div class="filterTodo">
+                <select class="filter">
+                    <option value="all">All</option>
+                    <option value="incomplete">Incomplete</option>
+                    <option value="completed">Completed</option>
+                </select>
+            </div>
         </form>
     </header>
+    <section>
+        <label id="inputStatus"></label>
+    </section>
     <div class="todo-container">
         <ul class="todoList"></ul>
     </div>

@@ -98,3 +98,33 @@ header form input:focus{
     transform: translateY(8rem) rotateZ(20deg);
     opacity: 0;
 }
+.filterTodo .filter{
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border:none;
+}
+.filterTodo{
+    margin:0.5rem;
+    position: relative;
+    overflow: hidden;
+    /* min-height: 20%; */
+
+}
+.filter{
+    padding:0.85rem;
+    width:10rem;
+    background-color: #fff;
+    cursor: pointer;
+}
+.filterTodo::after{
+    content:'\25BC';
+    position:absolute;
+    top:0;
+    right:0;
+    color:#fff;
+    background-color:#11b6e4;
+    padding:1rem;
+    pointer-events: none;
+}
