@@ -1,4 +1,5 @@
 //selction
+document.addEventListener('DOMContentLoaded',getTodoItems);
 const todoInput=document.querySelector(".list-input");
 const addBtn=document.querySelector(".addBtn");
 const todolist=document.querySelector(".todoList");
@@ -22,6 +23,7 @@ function addList(event){
     // if(listItem.textContent.length !== 0){
     // console.log(listItem);
     listItem.innerText=todoInput.value;
+    SaveToLocalStorage(todoInput.value);
     todoContainer.appendChild(listItem);
 
     // create the deleteButton
@@ -56,6 +58,7 @@ function manipulateTodo(e){
     if(selectItem.classList[0]==="del-Btn"){
         const todo=selectItem.parentElement;
         todo.classList.add("fall");
+        deleteTodoItem(todo);
         todo.addEventListener("transitionend",function(){
                 todo.remove();
     });
@@ -121,3 +124,72 @@ function sortTodo(e){
     });
 }
 // implement the web storage API
+//adding items to local Storage
+function SaveToLocalStorage(todo){
+    let todoitems;
+    if(localStorage.getItem('todoitems')===null){
+        todoitems=[];
+    }
+    else{
+        todoitems=JSON.parse(localStorage.getItem("todoitems"));
+    }
+    todoitems.push(todo);
+    localStorage.setItem("todoitems",JSON.stringify(todoitems));
+}
+
+function getTodoItems(){
+    let todoitems;
+    if(localStorage.getItem('todoitems')===null){
+        todoitems=[];
+    }
+    else{
+        todoitems=JSON.parse(localStorage.getItem("todoitems"));
+    }
+    todoitems.forEach(function(todo){
+        //implement the UI Of the item thatare in the local Storage
+        const todoContainer=document.createElement("div");
+        todoContainer.classList.add("todo");
+        const listItem=document.createElement("li");
+        listItem.classList.add("list_Item");
+        // if(listItem.textContent.length !== 0){
+        // console.log(listItem);
+        listItem.innerText=todo;
+        todoContainer.appendChild(listItem);
+    
+        // create the deleteButton
+        const delBtn=document.createElement("button");
+        delBtn.classList.add("del-Btn");
+        delBtn.innerHTML='<i class="fas fa-trash"></i>'
+        todoContainer.appendChild(delBtn);
+    
+        //create the edit Button
+        const editBtn=document.createElement("button");
+        editBtn.classList.add("edit-Btn");
+        editBtn.innerHTML='<i class="fas fa-edit"></i>'
+        todoContainer.appendChild(editBtn);
+    
+        // create the checked Button
+        const checkBtn=document.createElement("button");
+        checkBtn.classList.add("check-Btn");
+        checkBtn.innerHTML='<i class="far fa-check-circle"></i>'
+        todoContainer.appendChild(checkBtn);
+    
+        //appending tto the main div element
+        todolist.appendChild(todoContainer);
+    });
+
+}
+//implement the deletion of content ven to the local Storage
+function deleteTodoItem(todo){
+    let todoitems;
+    if(localStorage.getItem('todoitems')===null){
+        todoitems=[];
+    }
+    else{
+        todoitems=JSON.parse(localStorage.getItem("todoitems"));
+    }
+    const todoItemIndex=todo.children[0].innerText;
+    const itemIndex=todoitems.indexOf(todoItemIndex);
+    todoitems.splice(itemIndex,1);
+    localStorage.setItem("todoitems",JSON.stringify(todoitems));
+}
