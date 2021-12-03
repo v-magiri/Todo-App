@@ -12,16 +12,16 @@ addBtn.addEventListener("click",addList);
 todolist.addEventListener("click",manipulateTodo);
 choice.addEventListener("click",sortTodo);
 
-saveBtn.addEventListener("click",editTodo);
+// saveBtn.addEventListener("click",editTodo);
 
 function addList(event){
     event.preventDefault();
+    //validation of whether the input is empty
+    if(todoInput.value){
     const todoContainer=document.createElement("div");
     todoContainer.classList.add("todo");
     const listItem=document.createElement("li");
     listItem.classList.add("list_Item");
-    // if(listItem.textContent.length !== 0){
-    // console.log(listItem);
     listItem.innerText=todoInput.value;
     SaveToLocalStorage(todoInput.value);
     todoContainer.appendChild(listItem);
@@ -44,13 +44,13 @@ function addList(event){
     checkBtn.innerHTML='<i class="far fa-check-circle"></i>'
     todoContainer.appendChild(checkBtn);
 
-    //appending tto the main div element
+    //appending to the main div element
     todolist.appendChild(todoContainer);
     todoInput.value="";
-    // }
-    // else{
-    //     alert("please Enter a task")
-    // }
+    }
+    else{
+        alert("please Enter a task")
+    }
 }
 // manipulate the Todo
 function manipulateTodo(e){
@@ -68,32 +68,29 @@ function manipulateTodo(e){
         todo.classList.toggle("completed");
     }
     if(selectItem.classList[0]==="edit-Btn"){
-        const todo=selectItem.parentElement;
-        const itemSelected=todo.querySelector(".list_Item").textContent;
-        todoInput.value=itemSelected;
-        // editTodo();
+        const todo=selectItem.parentElement.innerText;
+        todoInput.value=todo;
+        let todoitems;
+        if(localStorage.getItem('todoitems')===null){
+            todoitems=[];
+        }
+        else{
+            todoitems=JSON.parse(localStorage.getItem("todoitems"));
+        }
+        const todoItemIndex=todoitems.indexOf(todo)
+        console.log(todoItemIndex);
         addBtn.style.display="none";
         saveBtn.style.display="inline";
         saveBtn.addEventListener("click",function(){
-            selectItem.innerHTML=todoInput.value;
+            todoitems[todoItemIndex]=todoInput.value;
+            console.log(todoitems);
+            localStorage.setItem("todoitems",JSON.stringify(todoitems));
             addBtn.style.display="inline";
             saveBtn.style.display="none";
             e.preventDefault();
         });
-        console.log();
     }
     
-}
-function editTodo(e){
-    e.preventDefault();
-    const selectItem=e.target;
-    const todo=selectItem.parentElement;
-    addBtn.style.display="none";
-    saveBtn.style.display="inline";
-    todo.selectItem.innerHTML=todoInput.value;
-    addBtn.style.display="inline";
-    saveBtn.style.display="none";
-
 }
 function sortTodo(e){
     const items=todolist.childNodes;
