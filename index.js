@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded',getTodoItems);
 const todoInput=document.querySelector(".list-input");
 const addBtn=document.querySelector(".addBtn");
 const todolist=document.querySelector(".todoList");
+const input=document.querySelector("#action");
 const saveBtn=document.querySelector(".saveBtn");
 const label=document.getElementById("#inputStatus");
 const choice=document.querySelector(".filter");
@@ -11,11 +12,10 @@ addBtn.addEventListener("click",addList);
 
 todolist.addEventListener("click",manipulateTodo);
 choice.addEventListener("click",sortTodo);
-
 // saveBtn.addEventListener("click",editTodo);
 
-function addList(event){
-    event.preventDefault();
+function addList(e){
+    e.preventDefault();
     //validation of whether the input is empty
     if(todoInput.value){
     const todoContainer=document.createElement("div");
@@ -79,14 +79,17 @@ function manipulateTodo(e){
         }
         const todoItemIndex=todoitems.indexOf(todo)
         console.log(todoItemIndex);
+        addBtn.removeEventListener("click",function(){
+            console.log("Updating todoItem");
+        });
         addBtn.style.display="none";
         saveBtn.style.display="inline";
         saveBtn.addEventListener("click",function(){
             todoitems[todoItemIndex]=todoInput.value;
             console.log(todoitems);
             localStorage.setItem("todoitems",JSON.stringify(todoitems));
-            addBtn.style.display="inline";
-            saveBtn.style.display="none";
+                // addBtn.style.display="inline";
+                // saveBtn.style.display="none";
             e.preventDefault();
         });
     }
@@ -94,7 +97,6 @@ function manipulateTodo(e){
 }
 function sortTodo(e){
     const items=todolist.childNodes;
-    // console.log(e.target.value);
     items.forEach(function(todo){
         switch(e.target.value){
             case "all":
